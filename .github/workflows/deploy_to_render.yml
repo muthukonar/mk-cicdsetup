@@ -3,10 +3,7 @@ name: Deploy To Render
 on:
   push:
     branches: [main]
-  pull_request:
-    branches:
-      - main
-
+  
 jobs:
   ci:
     name: Deploy To Render
