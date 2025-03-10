@@ -1,44 +1,3 @@
-# name: Checking Tests
-
-# on:
-#   push:
-#     branches: [main]
-#   pull_request:
-#     branches:
-#       - main
-#       - develop
-#       - feature/test-action
-
-# jobs:
-#   test:
-#     name: Checking Tests
-#     runs-on: ubuntu-latest
-
-#     steps:
-    
-#       - name: Checkout code
-#         uses: actions/checkout@v4
-    
-#       - name: Set up Node.js
-#         uses: actions/setup-node@v4
-#         with:
-#           node-version: 21.x
-     
-#       - name: Install dependencies
-#         run: npm install
-     
-#       - name: Build App
-#         run: npm run build
-     
-#       - name: Cypress component testing
-#         uses: cypress-io/github-action@v6
-#         with:
-#           component: true
-     
-#       - name: Run vitest component tests
-#         run: npm run test-component
-
-
 name: Checking Tests
 
 on:
@@ -75,17 +34,8 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           component: true
-        id: cypress_tests
      
       - name: Run vitest component tests
         run: npm run test-component
-        id: vitest_tests
 
-      - name: Combine test results
-        run: |
-          echo "## Test Results" >> $GITHUB_STEP_SUMMARY
-          echo "### Cypress Tests" >> $GITHUB_STEP_SUMMARY
-          echo "${{ steps.cypress_tests.outcome }}" >> $GITHUB_STEP_SUMMARY
-          echo "### Vitest Tests" >> $GITHUB_STEP_SUMMARY
-          echo "${{ steps.vitest_tests.outcome }}" >> $GITHUB_STEP_SUMMARY
 

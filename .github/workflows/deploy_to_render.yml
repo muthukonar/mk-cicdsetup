@@ -1,32 +1,3 @@
-# name: Deploy To Render
-
-# on:
-#   push:
-#     branches: [main]
-#   pull_request:
-#     branches:
-#       - main
-
-# jobs:
-#   ci:
-#     name: Deploy To Render
-#     runs-on: ubuntu-latest
-#     steps:
-#       - uses: actions/checkout@v4
-#       - name: Test
-#         run: |
-#           npm install
-#           npm run test-component
-
-#       - name: Deploy
-#         # Only run this step if the branch is main
-#         if: github.ref == 'refs/heads/main'
-#         env:
-#           deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
-#         run: |
-#           curl "$deploy_url"
-
-
 name: Deploy To Render
 
 on:
@@ -42,27 +13,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-     
-      - name: Install dependencies
-        run: npm install
-
       - name: Test
-        id: test_component
-        run: npm run test-component
-
-      - name: Combine test results
         run: |
-          echo "## Deployment & Test Results" >> $GITHUB_STEP_SUMMARY
-          echo "### Test Result" >> $GITHUB_STEP_SUMMARY
-          echo "${{ steps.test_component.outcome }}" >> $GITHUB_STEP_SUMMARY
-          
+          npm install
+          npm run test-component
+
       - name: Deploy
+        # Only run this step if the branch is main
         if: github.ref == 'refs/heads/main'
         env:
           deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
         run: |
           curl "$deploy_url"
-          
-      - name: Final Deployment Summary
-        run: |
-          echo "Deployment to Render was successful!" >> $GITHUB_STEP_SUMMARY
+
