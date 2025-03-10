@@ -46,3 +46,4 @@ describe('Quiz Component', () => {
     cy.get('h2').should('not.be.empty');
   });
 });
+
